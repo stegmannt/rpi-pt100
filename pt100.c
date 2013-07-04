@@ -16,14 +16,15 @@
 
 #define PT100_PIN 4	// PT100 is connected to GPIO 23
 
+volatile int time = 0;
 /*
  * Interrupt routine, which prints out the PIN value for the moment
  */
 void pt100_interrupt() {
-  int time = millis();
+  time = millis()-time;
   int value = digitalRead(PT100_PIN);
   
-  printf("Current value of pin %i: %i | Time since last call: %is\n", PT100_PIN, value, time);
+  printf("Current value of pin %i: %i | Time since last call: %ims\n", PT100_PIN, value, time);
 }
 
 /*
