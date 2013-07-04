@@ -20,9 +20,10 @@
  * Interrupt routine, which prints out the PIN value for the moment
  */
 void pt100_interrupt() {
+  int time = millis();
   int value = digitalRead(PT100_PIN);
   
-  printf("Current value of pin %i: %i\n", PT100_PIN, value);
+  printf("Current value of pin %i: %i | Time since last call: %is\n", PT100_PIN, value, time);
 }
 
 /*
