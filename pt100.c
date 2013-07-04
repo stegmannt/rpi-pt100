@@ -16,7 +16,7 @@
 
 #define PT100_PIN 4	// PT100 is connected to GPIO 23
 
-volatile int time = 0;
+int time = 0;
 /*
  * Interrupt routine, which prints out the PIN value for the moment
  */
