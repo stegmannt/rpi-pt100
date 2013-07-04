@@ -22,7 +22,7 @@
 void pt100_interrupt() {
   int value = digitalRead(PT100_PIN);
   
-  printf("Current value of pin %i: %i", PT100_PIN, value);
+  printf("Current value of pin %i: %i\n", PT100_PIN, value);
 }
 
 /*
