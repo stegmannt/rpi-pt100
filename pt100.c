@@ -16,6 +16,7 @@
 
 #define PT100_PIN 4	// PT100 is connected to GPIO 23
 #define ARRAY_SIZE 15	// number of measured values
+#define R_REF = 98	// reference resistor
 
 static volatile int elapsed_time = 0;
 
@@ -57,13 +58,27 @@ int* find_start_of_cycle() {
    * same we have a problem.
   */
   if (*(smallest-1) < *(smallest+1)) {
-    sof = smallest; 
+    sof = smallest-1; 
   } 
   else if (*(smallest-1) > *(smallest+1)) {
-    sof = smallest+1;
+    sof = smallest;
   }
     
   return sof;
+}
+
+/*
+ * Calculates the resistance of the PT100 sensor in a given cycle.
+ * 
+ */
+int resistance(int* sof) {
+  double Noff = *sof + *(sof+1);
+  double Nab = *(sof+2);
+  double Ncd = *(sof+3);
+  
+  double resistance = (Ncd - Noff)/(Nab - Noff)
+  
+  return resistance;
 }
 
 /*
@@ -102,8 +117,9 @@ int main(void) {
   }
   
   int* sof = find_start_of_cycle();
+  int Rpt100 = resistance(sof);
   
-  printf("Start of cycle is %i which is %i\n", sof, *sof);
+  printf("Resistance is futile: %iOhm", Rpt100);
 
   return 0 ;
 }
