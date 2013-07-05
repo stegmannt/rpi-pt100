@@ -15,7 +15,7 @@
 #include <wiringPi.h>
 
 #define PT100_PIN 4	// PT100 is connected to GPIO 23
-#define ARRAY_SIZE 15	// number of measured values
+#define ARRAY_SIZE 150	// number of measured values
 #define R_REF 98	// reference resistor
 
 static volatile int elapsed_time = 0;
