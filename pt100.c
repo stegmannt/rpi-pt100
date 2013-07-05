@@ -58,8 +58,12 @@ int main(void) {
   for (;;)
   {
       if (counter < 12)
+      {
 	      delay (100) ;
-      
+      }
+      else {
+	break;
+      }      
   }
 
   return 0 ;
