@@ -16,6 +16,7 @@
 
 #define PT100_PIN 4	// PT100 is connected to GPIO 23
 #define ARRAY_SIZE 150	// number of measured values
+#define CYCLE_LENGTH 5  // length of one cycle
 #define R_REF 98	// reference resistor
 
 static volatile int elapsed_time = 0;
@@ -82,6 +83,19 @@ int resistance(int* sof) {
 }
 
 /*
+ * Calculate average resistance
+ */
+float average_resistance(int *sof) {
+  int valid_cycles;
+  float Rsum = 0;
+  for (valid_cycles=0;valid_cycles<ARRAY_SIZE-2;valid_cycles++) {
+    RSum += resistance(sof+(valid_cycles*CYCLE_LENGTH)
+  }
+  return Rsum/valid_cycles;  
+}
+  
+
+/*
  * main function ripped and modified from WiringPi/examples/isr.c
  */
 int main(void) {
@@ -117,7 +131,7 @@ int main(void) {
   }
   
   int* sof = find_start_of_cycle();
-  double Rpt100 = resistance(sof);
+  double Rpt100 = average_resistance(sof);
   
   printf("Resistance is futile: %f Ohm\n", Rpt100);
 
