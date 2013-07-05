@@ -39,7 +39,7 @@ int main(void) {
     return 1 ;
   }
 
-  if (wiringPiISR (PT100_PIN, INT_EDGE_BOTH, &pt100_interrupt) < 0)
+  if (wiringPiISR (PT100_PIN, INT_EDGE_RISING, &pt100_interrupt) < 0)
   {
     fprintf (stderr, "Unable to setup ISR: %s\n", strerror (errno)) ;
     return 1 ;
