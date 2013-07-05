@@ -15,7 +15,7 @@
 #include <wiringPi.h>
 
 #define PT100_PIN 4	// PT100 is connected to GPIO 23
-#define ARRAY_SIZE 150	// number of measured values
+#define ARRAY_SIZE 250	// number of measured values
 #define CYCLE_LENGTH 5  // length of one cycle
 #define R_REF 98	// reference resistor
 
@@ -33,8 +33,6 @@ void pt100_interrupt() {
     int duration = millis() - elapsed_time;
     elapsed_time = millis();
     cycles[counter++] = duration;
-  
-    printf("Time since last call: %ims\n", duration);
   }
 }
 
@@ -88,10 +86,10 @@ int resistance(int* sof) {
 float average_resistance(int *sof) {
   int valid_cycles;
   float Rsum = 0;
-  for (valid_cycles=0;valid_cycles<ARRAY_SIZE-2;valid_cycles++) {
-    Rsum += resistance(sof+(valid_cycles*CYCLE_LENGTH));
+  for (valid_cycles=0;valid_cycles<ARRAY_SIZE-2;valid_cycles+=CYCLE_LENGTH) {
+    Rsum += resistance(sof+valid_cycles);
   }
-  return Rsum/valid_cycles;  
+  return (CYCLE_LENGTH*Rsum)/valid_cycles;  
 }
   
 
