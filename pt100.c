@@ -17,7 +17,7 @@
 #define PT100_PIN 4	// PT100 is connected to GPIO 23
 #define ARRAY_SIZE 500	// number of measured values
 #define CYCLE_LENGTH 5  // length of one cycle
-#define R_REF 98	// reference resistor
+#define R_REF 100	// reference resistor
 
 static volatile int elapsed_time = 0;
 
