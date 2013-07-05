@@ -27,18 +27,43 @@ static int cycles[ARRAY_SIZE] = {0};
  * Interrupt routine, which prints out the PIN value for the moment
  */
 void pt100_interrupt() {
-  int duration = millis() - elapsed_time;
-  elapsed_time = millis();
-  cycles[counter++] = duration;
+  if (counter < ARRAY_SIZE) {
+    int duration = millis() - elapsed_time;
+    elapsed_time = millis();
+    cycles[counter++] = duration;
   
-  printf("Time since last call: %ims\n", duration);
+    printf("Time since last call: %ims\n", duration);
+  }
 }
 
 /*
- * Routine to find the start of the cycle. Therefore 
+ * Routine to find the start of the cycle. Therefore the two lowest values of
+ * the cycle need to be found.
+ *
+ * Returns the address of the last SOF-value.
  */
 int* find_start_of_cycle() {
+  int* smallest = cycles+1;
+  int* sof = smallest;
   
+  //find the smallest element
+  int i;
+  for (i=2;i<5;i++) {
+      if (cycles[i] < *smallest) smallest = cycles+i;
+  }
+  
+  /* compare smallest-1 element with smallest+1 element and take the smaller one,
+   * which is then the first or second part of the SOF signal. If both are the
+   * same we have a problem.
+  */
+  if (*(smallest-1) < *(smallest+1)) {
+    sof = smallest; 
+  } 
+  else if (*(smallest-1) > *(smallest+1)) {
+    sof = smallest+1;
+  }
+    
+  return sof;
 }
 
 /*
@@ -70,10 +95,15 @@ int main(void) {
 	      delay (100) ;
       }
       else {
-	
+	//remove interrupt routine
+	wiringPiISR (PT100_PIN, INT_EDGE_RISING, 0);
 	break;
       }      
   }
+  
+  int* sof = find_start_of_cycle();
+  
+  printf("Start of cycle is %i which is %i\n", sof, *sof);
 
   return 0 ;
 }
