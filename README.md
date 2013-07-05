@@ -3,4 +3,10 @@ rpi-pt100
 
 measure temperature with a pt100 sensor and a RPi
 
-WARNING: This thing isnt working yet. I just figure out how everything works with the PI!
+## Note
+
+Until now this is just a proof of concept. See issues section.
+
+## Known issues
+
+* Big fluctuations in the measured resistance, maybe caused by poor cable connections.
