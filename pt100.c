@@ -21,10 +21,11 @@ static volatile int elapsed_time = 0;
  * Interrupt routine, which prints out the PIN value for the moment
  */
 void pt100_interrupt() {
-  elapsed_time = millis() - elapsed_time;
+  duration = millis() - elapsed_time;
+  elapsed_time = millis();
   int value = digitalRead(PT100_PIN);
   
-  printf("Current value of pin %i: %i | Time since last call: %ims\n", PT100_PIN, value, elapsed_time);
+  printf("Current value of pin %i: %i | Time since last call: %ims\n", PT100_PIN, value, duration);
 }
 
 /*
