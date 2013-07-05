@@ -30,7 +30,7 @@ void pt100_interrupt() {
   elapsed_time = millis();
   cycles[counter++] = duration;
   
-  printf("Current value of pin %i: %i | Time since last call: %ims\n", PT100_PIN, value, duration);
+  printf("Time since last call: %ims\n", duration);
 }
 
 /*
