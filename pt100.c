@@ -57,7 +57,7 @@ int main(void) {
 
   for (;;)
   {
-      if (counter < 12}
+      if (counter < 12)
 	      delay (100) ;
       
   }
