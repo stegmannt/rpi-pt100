@@ -21,7 +21,7 @@ static volatile int elapsed_time = 0;
  * Interrupt routine, which prints out the PIN value for the moment
  */
 void pt100_interrupt() {
-  duration = millis() - elapsed_time;
+  int duration = millis() - elapsed_time;
   elapsed_time = millis();
   int value = digitalRead(PT100_PIN);
   
