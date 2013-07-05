@@ -76,7 +76,7 @@ int resistance(int* sof) {
   double Nab = *(sof+2);
   double Ncd = *(sof+3);
   
-  double resistance = (Ncd - Noff)/(Nab - Noff);
+  double resistance = (Ncd - Noff)*R_REF/(Nab - Noff);
   
   return resistance;
 }
@@ -117,9 +117,9 @@ int main(void) {
   }
   
   int* sof = find_start_of_cycle();
-  int Rpt100 = resistance(sof);
+  double Rpt100 = resistance(sof);
   
-  printf("Resistance is futile: %iOhm", Rpt100);
+  printf("Resistance is futile: %dOhm\n", Rpt100);
 
   return 0 ;
 }
