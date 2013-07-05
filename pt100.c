@@ -1,7 +1,7 @@
 /*
  * pt100.c:
  * 	Use interrupts to read falling and rising edges from a gpio pin which is
- * 	connected to a Smartec universal transduce interface, which is again
+ * 	connected to a Smartec universal transducer interface, which is again
  * 	connected to a PT100 platinum resistance sensor. 
  *	
  *	http://www.smartec.nl/pdf/DSUTI.pdf 
@@ -16,15 +16,15 @@
 
 #define PT100_PIN 4	// PT100 is connected to GPIO 23
 
-static volatile int time = 0;
+static volatile int elapsed_time = 0;
 /*
  * Interrupt routine, which prints out the PIN value for the moment
  */
 void pt100_interrupt() {
-  time = millis()-time;
+  elapsed_time = millis() - elapsed_time;
   int value = digitalRead(PT100_PIN);
   
-  printf("Current value of pin %i: %i | Time since last call: %ims\n", PT100_PIN, value, time);
+  printf("Current value of pin %i: %i | Time since last call: %ims\n", PT100_PIN, value, elapsed_time);
 }
 
 /*
