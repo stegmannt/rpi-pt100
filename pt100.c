@@ -16,7 +16,7 @@
 
 #define PT100_PIN 4	// PT100 is connected to GPIO 23
 #define ARRAY_SIZE 15	// number of measured values
-#define R_REF = 98	// reference resistor
+#define R_REF 98	// reference resistor
 
 static volatile int elapsed_time = 0;
 
@@ -119,7 +119,7 @@ int main(void) {
   int* sof = find_start_of_cycle();
   double Rpt100 = resistance(sof);
   
-  printf("Resistance is futile: %dOhm\n", Rpt100);
+  printf("Resistance is futile: %f Ohm\n", Rpt100);
 
   return 0 ;
 }
