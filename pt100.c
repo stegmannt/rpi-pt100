@@ -76,7 +76,7 @@ int resistance(int* sof) {
   double Nab = *(sof+2);
   double Ncd = *(sof+3);
   
-  double resistance = (Ncd - Noff)/(Nab - Noff)
+  double resistance = (Ncd - Noff)/(Nab - Noff);
   
   return resistance;
 }
