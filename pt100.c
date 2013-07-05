@@ -89,7 +89,7 @@ float average_resistance(int *sof) {
   int valid_cycles;
   float Rsum = 0;
   for (valid_cycles=0;valid_cycles<ARRAY_SIZE-2;valid_cycles++) {
-    RSum += resistance(sof+(valid_cycles*CYCLE_LENGTH)
+    Rsum += resistance(sof+(valid_cycles*CYCLE_LENGTH)
   }
   return Rsum/valid_cycles;  
 }
