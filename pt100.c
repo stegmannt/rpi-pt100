@@ -3,6 +3,8 @@
  * 	Use interrupts to read rising edges from a gpio pin which is
  * 	connected to a Smartec universal transducer interface, which is again
  * 	connected to a PT100 platinum resistance sensor. 
+ * 
+ * 	Prints out the temperature in degree Celsius.
  *	
  *	http://www.smartec.nl/pdf/DSUTI.pdf 
  *
@@ -21,12 +23,12 @@
 
 static volatile int elapsed_time = 0;
 
-// Measure 12 values to get at least two complete cycles
+// Measure ARRAY_SIZE values to get at least ARRAY_SIZE/CYCLE_LENGTH-2 complete cycles
 static volatile int counter = 0;
 static int cycles[ARRAY_SIZE] = {0};
 
 /*
- * Interrupt routine, which prints out the PIN value for the moment
+ * Interrupt routine, which calcutes the durations between two rising edges
  */
 void pt100_interrupt() {
   if (counter < ARRAY_SIZE) {
@@ -40,15 +42,16 @@ void pt100_interrupt() {
  * Routine to find the start of the cycle. Therefore the two lowest values of
  * the cycle need to be found.
  *
- * Returns the address of the last SOF-value.
+ * Returns the address of the first SOF-value.
  */
 int* find_start_of_cycle() {
   int* smallest = cycles+1;
   int* sof = smallest;
   
   //find the smallest element
+  //worst case 11/34/44/34/12
   int i;
-  for (i=2;i<5;i++) {
+  for (i=2;i<=5;i++) {
       if (cycles[i] < *smallest) smallest = cycles+i;
   }
   
@@ -153,8 +156,7 @@ int main(void) {
   int* sof = find_start_of_cycle();
   double Rpt100 = average_resistance(sof);
   
-  printf("Resistance is futile: %f Ohm\n", Rpt100);
-  printf("Current temperature: %f degree Celsius\n", GetPt100Temperature(Rpt100));
+  printf("%f", GetPt100Temperature(Rpt100));
 
   return 0 ;
 }
