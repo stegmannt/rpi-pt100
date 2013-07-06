@@ -17,7 +17,7 @@
 #include <wiringPi.h>
 
 #define PT100_PIN 4	// PT100 is connected to GPIO 23
-#define ARRAY_SIZE 250	// number of measured values
+#define ARRAY_SIZE 50	// number of measured values
 #define CYCLE_LENGTH 5  // length of one cycle
 #define R_REF 100	// reference resistor
 
@@ -48,10 +48,9 @@ int* find_start_of_cycle() {
   int* smallest = cycles+1;
   int* sof = smallest;
   
-  //find the smallest element
-  //worst case 11/34/44/34/12
+  //find the smallest element in a range of 2-times the CYCLE_LENGTH
   int i;
-  for (i=2;i<=5;i++) {
+  for (i=2;i<10;i++) {
       if (cycles[i] < *smallest) smallest = cycles+i;
   }
   
@@ -89,7 +88,7 @@ int resistance(int* sof) {
 float average_resistance(int *sof) {
   int valid_cycles;
   float Rsum = 0;
-  for (valid_cycles=0;valid_cycles<ARRAY_SIZE-2;valid_cycles+=CYCLE_LENGTH) {
+  for (valid_cycles=0;valid_cycles<ARRAY_SIZE-CYCLE_LENGTH;valid_cycles+=CYCLE_LENGTH) {
     Rsum += resistance(sof+valid_cycles);
   }
   return (CYCLE_LENGTH*Rsum)/valid_cycles;  
