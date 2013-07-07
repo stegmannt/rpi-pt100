@@ -135,7 +135,7 @@ int main(void) {
   }
   else
   { 
-    printf ("Waiting ... \n") ; fflush (stdout) ;
+    fflush (stdout) ;
   }
 
 
