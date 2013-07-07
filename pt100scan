@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Shell script to write the current temperature from
+# the pt100 executable into a text file every x minutes.
+
+# Use this as a cronjob and dont call pt100 directly 
+# from a web script as it still needs su rights.
+
+while :
+do
+        /usr/bin/pt100 > $2;
+        sleep $1\m
+done 
