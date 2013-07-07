@@ -9,6 +9,7 @@ set :port, 8080
 get '/temp' do
   file = File.new("temperature.txt")
   temp = file.gets
+  mtime = file.stat.mtime
   file.close
-  return "Current temperature: #{temp}°C"
+  return "Temperature: #{temp}°C<br/>Modification time: #{mtime}"
 end 
