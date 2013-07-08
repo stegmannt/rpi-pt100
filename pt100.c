@@ -45,13 +45,13 @@ void pt100_interrupt() {
  * Returns the address of the first SOF-value.
  */
 int* find_start_of_cycle() {
-  int* smallest = cycles+1;
-  int* sof = smallest;
+  int* smallest = (int*)cycles+1;
+  int* sof = (int*)smallest;
   
   //find the smallest element in a range of 2-times the CYCLE_LENGTH
   int i;
   for (i=2;i<10;i++) {
-      if (cycles[i] < *smallest) smallest = cycles+i;
+      if (cycles[i] < *smallest) smallest = (int*)cycles+i;
   }
   
   /* compare smallest-1 element with smallest+1 element and take the smaller one,
@@ -59,10 +59,10 @@ int* find_start_of_cycle() {
    * same we have a problem.
   */
   if (*(smallest-1) < *(smallest+1)) {
-    sof = smallest-1; 
+    sof = (int*)smallest-1; 
   } 
   else if (*(smallest-1) > *(smallest+1)) {
-    sof = smallest;
+    sof = (int*)smallest;
   }
     
   return sof;
