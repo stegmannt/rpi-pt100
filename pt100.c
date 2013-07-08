@@ -25,7 +25,7 @@ static volatile int elapsed_time = 0;
 
 // Measure ARRAY_SIZE values to get at least ARRAY_SIZE/CYCLE_LENGTH-2 complete cycles
 static volatile int counter = 0;
-static int cycles[ARRAY_SIZE] = {0};
+static volatile int cycles[ARRAY_SIZE] = {0};
 
 /*
  * Interrupt routine, which calcutes the durations between two rising edges
