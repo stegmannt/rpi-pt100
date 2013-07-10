@@ -3,8 +3,8 @@
 
 require 'sinatra'
 
-set :bind, '192.168.178.51'
-set :port, 8080
+set :bind, ARGV[0]
+set :port, ARGV[1]
 
 get '/temp' do
   file = File.new("temperature.txt")
